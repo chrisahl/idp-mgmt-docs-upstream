@@ -126,7 +126,7 @@ identity configuration management for Kubernetes namespace. A value of `idp-mgmt
 +
 [source,terminal]
 ----
-oc create namespace <namespace>
+oc create namespace idp-mgmt-config
 ----
 
 . Switch your project namespace to the one that you created. Replace `namespace` with the name of the
@@ -135,7 +135,7 @@ identity configuration management for Kubernetes namespace that you created in s
 +
 [source,terminal]
 ----
-oc project <namespace>
+oc project idp-mgmt-config
 ----
 
 . Create a YAML file to configure an `OperatorGroup` resource. Each namespace can have only one operator group. Replace `default` with the name of your operator group. Replace `namespace` with the name of your project namespace. See the following example:
@@ -145,17 +145,18 @@ oc project <namespace>
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
-  name: <default>
+  generateName: idp-mgmt-config- 
+  namespace: idp-mgmt-config
 spec:
   targetNamespaces:
-  - <namespace>
+  - idp-mgmt-config
 ----
 . Run the following command to create the `OperatorGroup` resource. Replace `operator-group` with the name of the operator group YAML file that you created:
 
 +
 [source,terminal]
 ----
-oc apply -f <path-to-file>/<operator-group>.yaml
+oc create -f <path-to-file>/<operator-group>.yaml
 ----
 +
 
